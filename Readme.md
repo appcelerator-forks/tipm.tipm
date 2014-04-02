@@ -1,62 +1,48 @@
-  ![web component logo](http://i49.tinypic.com/e7nj9v.png)
+# tipm
 
-  Component package manager for building a better web. [![Build Status](https://travis-ci.org/component/component.png)](https://travis-ci.org/component/component)
+  Titanium package manager for maximum reuse and code sharing. Originally based on [Component](https://github.com/component/component)
 
 ## Installation
 
   With [node](http://nodejs.org) previously installed:
 
-     $ npm install -g component
+     $ npm install -g tipm
 
   With node binary on OSX:
 
      $ (cd /usr/local && \
-        curl -L# http://nodejs.org/dist/v0.8.15/node-v0.8.15-darwin-x86.tar.gz \
+        curl -L# http://nodejs.org/dist/v0.10.22/node-v0.10.22-darwin-x86.tar.gz \
         | tar -zx --strip 1) \
-       && npm install -g component \
-       && printf "installed component(1) %s\n" $(component --version)
+       && npm install -g tipm \
+       && printf "installed tipm(1) %s\n" $(tipm --version)
 
-  NOTE: tested with node 0.8.x
+  NOTE: tested with node 0.10.x
 
 ## Features
 
   - write modular commonjs components
   - write components that include their own styles, images, scripts, or any combo
   - no registry publishing or account required, uses github repositories
-  - extensible sub-commands via `component-YOURCOMMAND` git-style
-  - component skeleton creation command
+  - extensible sub-commands via `tipm-YOURCOMMAND` git-style
+  - tipm skeleton creation command
   - installs dependencies from the command-line or ./component.json
   - avoid name squatting through github's naming conventions
-  - build your components with `--standalone` to share them with non-component(1) users
+  - build your components with `--standalone` to share them with non-tipm(1) users
   - discovery of useful packages is simple with a robust search
   - view documentation from the command line
   - simple private registry set up (all you need is a file server)
   - very fast installs (50 components in ~4.5s)
   - very fast search (~300ms)
 
-## Links
+## FAQ
 
- - [List](https://github.com/component/component/wiki/Components) of all available components
- - [Wiki](https://github.com/component/component/wiki)
- - [Mailing List](https://groups.google.com/group/componentjs)
- - [Google+ Community](https://plus.google.com/u/0/communities/109771441994395167277)
- - component ["spec"](https://github.com/component/component/wiki/Spec)
- - join `#components` on freenode
- - follow [@component_js](http://twitter.com/component_js) on twitter
- - [Building better components](https://github.com/component/component/wiki/Building-better-components) tips
- - [F.A.Q](https://github.com/component/component/wiki/F.A.Q)
- - In-browser component [builder](http://component-kelonye.rhcloud.com/)
- - component [dependency visualizer](http://component-graph.herokuapp.com/component/dom)
+### Why not just use component?
+  
+Component is great alone for building and creating components, but due to the nature of Titanium component does not fully support titanium out of the box (ex. some files are required in specific folders, additional files are required for building apps, require is already defined in the Ti scope, etc...)
 
-## Screencasts
+### Can I still use components from [Component's package list](https://github.com/component/component/wiki/Components)
 
- - [Creating web components](https://vimeo.com/53730178)
- - [App integration introduction](https://vimeo.com/48054442)
-
-## Articles
-
-  - building a [date picker component](http://tjholowaychuk.tumblr.com/post/37832588021/building-a-date-picker-component)
-  - original [component blog post](http://tjholowaychuk.tumblr.com/post/27984551477/components)
+Yes all of component's packages can be installed and built with tipm just the same as tipm packages. The only restriction is the component must be compatible with the Titanium API (ex. no html, no css, no browser specific apis, etc...) although some of these issues can be fixed with a simple polyfill.
 
 ## Usage
 
@@ -64,7 +50,7 @@
 
 ```
 
-Usage: component <command> [options]
+Usage: tipm <command> [options]
 
 Options:
 
@@ -74,9 +60,8 @@ Options:
 Commands:
 
   install [name ...]      install one or more components
-  create [dir]            create a component skeleton
   search [query]          search with the given query
-  convert <file ...>      convert html files to js modules
+  convert <file ...>      convert tss files to js modules
   info <name> [prop]      output json component information
   changes <name>          output changelog contents
   wiki                    open the components list wiki page
@@ -85,15 +70,31 @@ Commands:
 
 ```
 
+## Additional Commands
+
+### tipm create
+
+Installation
+
+```
+$ npm install -g tipm-create
+```
+
+Usage
+
+```
+$ tipm create [dir]
+```
+
 ## Installing packages
 
   To install one or more packages, simply pass their github
-  repo names as arguments to `component install`. Dependencies
+  repo names as arguments to `tipm install`. Dependencies
   are resolved and the component contents are downloaded into
-  `./components` by default. View `component help install` for details.
+  `./components` by default. View `tipm help install` for details.
 
 ```
-$ component install component/tip
+$ tipm install component/tip
 
    install : component/tip@master
        dep : component/emitter@master
@@ -112,10 +113,13 @@ $ component install component/tip
 
 ## Searching for components
 
-  By adding your component to the [Components List](https://github.com/component/component/wiki/Components) wiki page it will become automatically available to `component-search(1)`. When invoked with no query all components are displayed, otherwise a filtered search, ordered by the number of github "stars":
+The search command currently only searches [Component's package list](https://github.com/component/component/wiki/Components). Additional Titanium specific components can be found on [tipm's github organizationn](https://github.com/tipm)
+ 
+  - [tipm List](https://github.com/tipm)
+  - [Components List](https://github.com/component/component/wiki/Components) wiki page it will become automatically available to `component-search(1)`. When invoked with no query all components are displayed, otherwise a filtered search, ordered by the number of github "stars":
 
 ```
-$ component search ui
+$ tipm search ui
 
   component/dialog
   url: https://github.com/component/dialog
@@ -136,7 +140,7 @@ $ component search ui
 
 ## Using GitHub as a registry
 
-  By using GitHub as the registry, `component(1)` is automatically
+  By using GitHub as the registry, `tipm(1)` is automatically
   available to you without further explicit knowledge or work
   creating a registry account etc.
 
@@ -154,7 +158,7 @@ $ component search ui
 
 ## Creating a component
 
-  The `component-create(1)` command can create a component
+  The `tipm-create(1)` command can create a component
   project skeleton for you by filling out the prompts. Once
   this repo is published to GitHub, you're all done!
 
@@ -162,13 +166,13 @@ $ component search ui
 name: popover
 description: Popover UI component
 does this component have js? yes
-does this component have css? yes
-does this component have html? yes
+does this component have tss? yes
+does this component have timl? yes
 
      create : popover
      create : popover/index.js
-     create : popover/template.html
-     create : popover/popover.css
+     create : popover/template.timl
+     create : popover/popover.tss
      create : popover/Makefile
      create : popover/Readme.md
      create : popover/.gitignore
@@ -180,29 +184,29 @@ does this component have html? yes
   complete with installed dependencies simply execute `make`.
 
 ## Templates
-
-  Because `component(1)` has no notion of a "template", even simple HTML files
+  __Not Implemented for Titanium Yet__
+  Because `tipm(1)` has no notion of a "template", even simple timl files
   should be converted to a `require()`-able module. It is recommended that public
-  components shared within the community use regular HTML templates, and regular
-  CSS stylesheets to maximize contributions, however if you wish to use alternate
+  components shared within the community use regular timl templates, and regular
+  tss stylesheets to maximize contributions, however if you wish to use alternate
   technologies just make sure to compile them before publishing them to GitHub.
 
-  For the recommended use-case of regular HTML, the `component-convert(1)` command
-  will translate a regular HTML file to its `require()`-able JavaScript counterpart.
+  For the recommended use-case of regular HTML, the `tipm-convert(1)` command
+  will translate a regular timl file to its `require()`-able JavaScript counterpart.
 
-## Developing component(1) sub-commands
+## Developing tipm(1) sub-commands
 
-  `component(1)` and sub-commands are structured much like `git(1)`,
+  `tipm(1)` and sub-commands are structured much like `git(1)`,
   in that sub-commands are simply separate executables. For example
-  `$ component info pkg` and `$ component-info pkg` are equivalent.
+  `$ tipm info pkg` and `$ tipm-info pkg` are equivalent.
 
   Because of this you'll likely want `PATH="./bin:$PATH"` in your
-  profile or session while developing component, otherwise `./bin/component`
+  profile or session while developing tipm, otherwise `./bin/tipm`
   will have a hard time finding the sub-commands.
 
 ## Using private components
 
-  `component(1)` uses [~/.netrc](http://man.cx/netrc(4)), like other tools such as [curl](http://man.cx/curl) and [git](http://git-scm.com/), to specify credentials for remote hosts. Simply create a `~/.netrc` file in the home directory:
+  `tipm(1)` uses [~/.netrc](http://man.cx/netrc(4)), like other tools such as [curl](http://man.cx/curl) and [git](http://git-scm.com/), to specify credentials for remote hosts. Simply create a `~/.netrc` file in the home directory:
 
 ```
 machine raw.github.com
@@ -224,42 +228,37 @@ Then run:
 $ make test
 ```
 
-## Contributors
-
-  - TJ Holowaychuk
-  - Guillermo Rauch
-  - Garrett Johnson
-  - Amir Abu Shareb
-  - Adam Sanderson
-  - Matt Mueller
-  - Forbes Lindesay
-  - Arpad Borsos
-  - Dan Williams
-  - Damián Suárez
-  - Tim Oxley
-  - Jeremy Worboys
-  - Nick Jackson
-  - Cameron Bytheway
-
-## Example applications
-
-  Open source application examples:
-
-  - Example using [script tags](https://github.com/component/script-tag-example) for integrating component with existing non-commonjs applications or frameworks
-  - [Todo list](https://github.com/component/todo) example comprised of private and public components
-  - [Component.io](https://github.com/component/component.io) website
-  - [Posty](https://github.com/visionmedia/posty)
-  - [NoFlo](noflojs.org) flow-based programming environment
+## Links
+ - tipm
+   - [List](https://github.com/tipm) of all available components
+ - Component
+   - [List](https://github.com/component/component/wiki/Components) of all available components
+   - [Wiki](https://github.com/component/component/wiki)
+   - [Mailing List](https://groups.google.com/group/componentjs)
+   - [Google+ Community](https://plus.google.com/u/0/communities/109771441994395167277)
+   - component ["spec"](https://github.com/component/component/wiki/Spec)
+   - join `#components` on freenode
+   - follow [@component_js](http://twitter.com/component_js) on twitter
+   - [Building better components](https://github.com/component/component/wiki/Building-better-components) tips
+   - [F.A.Q](https://github.com/component/component/wiki/F.A.Q)
+   - In-browser component [builder](http://component-kelonye.rhcloud.com/)
+   - component [dependency visualizer](http://component-graph.herokuapp.com/component/dom)
 
 ## Extensions
 
  - [component-graph(1)](https://github.com/component/component-graph) dependency graphs for component projects
 
+## Contributors
+  - Christian Sullivan
+  - Daniel Rebelo
+  - Julius Villanueva
+  - [Component Contributors](https://github.com/component/component#contributors)
+
 ## License
 
 (The MIT License)
 
-Copyright (c) 2014 TJ Holowaychuk &lt;tj@vision-media.ca&gt;
+Copyright (c) 2014 Bodhi5, Inc. &lt;info@bodhi5.com&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
