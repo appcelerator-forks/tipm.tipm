@@ -1,7 +1,7 @@
 {
-  "name": "component",
-  "version": "0.19.8",
-  "description": "Component package manager consuming git repositories",
+  "name": "tipm",
+  "version": "0.2.1",
+  "description": "Titanium package manager consuming git repositories",
   "keywords": [
     "component",
     "package",
@@ -9,8 +9,8 @@
     "browser",
     "module"
   ],
-  "author": "TJ Holowaychuk <tj@vision-media.ca>",
-  "repository": "git://github.com/component/component.git",
+  "author": "Bodhi5, Inc. <info@bodhi5.com>",
+  "repository": "git://github.com/tipm/tipm.git",
   "dependencies": {
     "commander": "1.0.5",
     "mkdirp": "~0.3.4",
@@ -36,18 +36,8 @@
     "mocha": "*",
     "should": "*"
   },
-  "bin": {
-    "component": "bin/component",
-    "component-info": "bin/component-info",
-    "component-help": "bin/component-help",
-    "component-install": "bin/component-install",
-    "component-ls": "bin/component-ls",
-    "component-convert": "bin/component-convert",
-    "component-build": "bin/component-build",
-    "component-search": "bin/component-search",
-    "component-create": "bin/component-create",
-    "component-changes": "bin/component-changes",
-    "component-wiki": "bin/component-wiki"
+  "directories": {
+    "bin": "bin/"
   },
   "main": "index",
   "engines": {
